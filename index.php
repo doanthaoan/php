@@ -5,9 +5,6 @@ $query = "SELECT * FROM question where FIND_IN_SET(question.id, (select question
 $questions = $db->query($query);
 $querykq = "SELECT qid,cid, question.point as point from answer, question where qid = question.id and FIND_IN_SET(qid,(select questions from test where test.id = 1))";
 $kq = $db->query($querykq);
-
-
-
 function tinhdiem($kq, $tl)
 {
     $diem = 0;
