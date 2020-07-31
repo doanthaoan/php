@@ -8,12 +8,13 @@ $kq = $db->query($querykq);
 
 
 
-function tinhdiem($kq, $tl) {
+function tinhdiem($kq, $tl)
+{
     $diem = 0;
     $total = 0;
     while ($row = $kq->fetch_assoc()) {
         $total += $row["point"];
-        $qname = "q".$row["qid"];
+        $qname = "q" . $row["qid"];
         if ($tl[$qname] == $row["cid"]) $diem += $row["point"];
     }
     return $diem . " / " . $total;
@@ -36,39 +37,39 @@ function tinhdiem($kq, $tl) {
 <body>
     <div class="container">
         <h1>Test Giang - t0001</h1>
-        <?php 
+        <?php
         if (isset($_POST["submit"])) {
             echo "Diem so cua ban la: ";
-            echo tinhdiem($kq, $_POST);            
+            echo tinhdiem($kq, $_POST);
         }
         ?>
         <form method="POST" name="testGiang" target="index.php">
-        <?php
-        while ($row = $questions->fetch_assoc()) {
-        ?>
-            <div class="card item">
-                <div class="card-body">
-                    <div class="card-title"><?php echo $row["id"]; ?>: <?php echo $row["text"]; ?></div>
-                    <div class="choices">
-                        <?php
-                        $query = "select * from choice where qid = " . $row["id"];
-                        $choices = $db->query($query);
-                        while ($rowChoice = $choices->fetch_assoc()) {
-                        ?>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="q<?php echo $row["id"]; ?>" id="q<?php echo $row["id"]; ?>" value="<?php echo $rowChoice["id"]; ?>">
-                                <label class="form-check-label" for="q<?php echo $row["id"]; ?>">
-                                    <pre><?php echo ($rowChoice["text"]); ?></pre>
-                                </label>
-                            </div>
-                        <?php } ?>
+            <?php
+            while ($row = $questions->fetch_assoc()) {
+            ?>
+                <div class="card item">
+                    <div class="card-body">
+                        <div class="card-title"><?php echo $row["id"]; ?>: <?php echo $row["text"]; ?></div>
+                        <div class="choices">
+                            <?php
+                            $query = "select * from choice where qid = " . $row["id"];
+                            $choices = $db->query($query);
+                            while ($rowChoice = $choices->fetch_assoc()) {
+                            ?>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="q<?php echo $row["id"]; ?>" id="q<?php echo $row["id"]; ?>" value="<?php echo $rowChoice["id"]; ?>">
+                                    <label class="form-check-label" for="q<?php echo $row["id"]; ?>">
+                                        <pre><?php echo ($rowChoice["text"]); ?></pre>
+                                    </label>
+                                </div>
+                            <?php } ?>
+                        </div>
                     </div>
                 </div>
-            </div>
-        <?php
-        }
-        ?>
-        <input type="submit" name="submit" value="Gui bai">
+            <?php
+            }
+            ?>
+            <input type="submit" name="submit" value="Gui bai">
         </form>
     </div>
 </body>
